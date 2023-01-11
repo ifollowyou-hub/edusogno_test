@@ -66,6 +66,7 @@
             <div class="d-grid gap-3 mb-2 mt-2">
                 <input type="button" name="save" class="btn btn-primary" value="Register" id="butsave">
             </div>
+            register userinfo
             <a class="show-signin mb-5" style="float: right; cursor: pointer">login with account</a>
         </form>
         <form id="login_form" name="form1" method="post" style="display:none;">
@@ -161,6 +162,33 @@ $(document).ready(function() {
 						$('#error').html('Invalid EmailId or Password !');
 					}
 					
+				}
+			});
+		}
+		else{
+			alert('Please fill all the field !');
+		}
+	});
+    $('#show-forgot').on('click', function() {
+		var email = $('#email_log').val();
+		if(email!=""){
+			$.ajax({
+				url: "save.php",
+				type: "POST",
+				data: {
+					type:3,
+					email: email
+				},
+				cache: false,
+				success: function(dataResult){
+					var dataResult = JSON.parse(dataResult);
+					if(dataResult.statusCode==200){
+						location.href = "dashboard.php";						
+					}
+					else if(dataResult.statusCode==201){
+						$("#success").show();
+						$('#error').html('confirm your email !');
+					}
 				}
 			});
 		}

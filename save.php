@@ -38,4 +38,26 @@
 		}
 		mysqli_close($conn);
 	}
+    if($_POST['type']==3){
+		$email   = $_POST['email'];
+        $to      = $email;
+        $subject = 'changed password';
+        $message = 'password is 123456';
+        $headers = 'From:  joelbird1128@gmail.com'       . "\r\n" .
+                    'Reply-To: joelbird1128@gmail.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
+
+		$check=mysqli_query($conn,"update users set password='123456' where email='$email'");
+		if (mysqli_num_rows($check)>0)
+		{
+			$_SESSION['email']=$email;
+			echo json_encode(array("statusCode"=>200));
+		}
+		else{
+			echo json_encode(array("statusCode"=>201));
+		}
+		mysqli_close($conn);
+	}
 ?>
